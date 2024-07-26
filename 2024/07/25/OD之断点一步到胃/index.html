@@ -1,0 +1,248 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>OD之断点一步到胃 | Aomr'blog</title><meta name="author" content="Aomr"><meta name="copyright" content="Aomr"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="​	常用的断点有INT3断点、硬件断点、内存断点、消息断点等。在调试时，合理使用断点能大大提高效率。  INT3断点 ​	这是一个常用的断点。在OllyDbg中可以使用bp命令或者“F2”快捷键来设置&#x2F;取消断点。当执行一个INT3断点时，该地址处的内容被调试器用INT3指令替换了，此时OllyDbg将INT3隐藏，显示出来的仍是中断前的指令。 ​	这个INT3指令，因其机器码是0xCC,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OD之断点一步到胃">
+<meta property="og:url" content="http://example.com/2024/07/25/OD%E4%B9%8B%E6%96%AD%E7%82%B9%E4%B8%80%E6%AD%A5%E5%88%B0%E8%83%83/index.html">
+<meta property="og:site_name" content="Aomr&#39;blog">
+<meta property="og:description" content="​	常用的断点有INT3断点、硬件断点、内存断点、消息断点等。在调试时，合理使用断点能大大提高效率。  INT3断点 ​	这是一个常用的断点。在OllyDbg中可以使用bp命令或者“F2”快捷键来设置&#x2F;取消断点。当执行一个INT3断点时，该地址处的内容被调试器用INT3指令替换了，此时OllyDbg将INT3隐藏，显示出来的仍是中断前的指令。 ​	这个INT3指令，因其机器码是0xCC,">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://feowmaomr.github.io/picx-images-hosting/Aomr.webp">
+<meta property="article:published_time" content="2024-07-25T10:21:54.000Z">
+<meta property="article:modified_time" content="2024-07-26T06:17:06.226Z">
+<meta property="article:author" content="Aomr">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://feowmaomr.github.io/picx-images-hosting/Aomr.webp"><link rel="shortcut icon" href="https://FeowmAomr.github.io/picx-images-hosting/Favicon.gif"><link rel="canonical" href="http://example.com/2024/07/25/OD%E4%B9%8B%E6%96%AD%E7%82%B9%E4%B8%80%E6%AD%A5%E5%88%B0%E8%83%83/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'OD之断点一步到胃',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2024-07-26 14:17:06'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://FeowmAomr.github.io/picx-images-hosting/Aomr.webp" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://FeowmAomr.github.io/picx-images-hosting/background1.webp')"><nav id="nav"><span id="blog-info"><a href="/" title="Aomr'blog"><span class="site-name">Aomr'blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">OD之断点一步到胃</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-07-25T10:21:54.000Z" title="发表于 2024-07-25 18:21:54">2024-07-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-07-26T06:17:06.226Z" title="更新于 2024-07-26 14:17:06">2024-07-26</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>12分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="OD之断点一步到胃"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>​	常用的断点有INT3断点、硬件断点、内存断点、消息断点等。在调试时，合理使用断点能大大提高效率。</p>
+<ol>
+<li><p>INT3断点</p>
+<p>​	这是一个常用的断点。在OllyDbg中可以使用bp命令或者“F2”快捷键来设置&#x2F;取消断点。当执行一个INT3断点时，该地址处的内容被调试器用INT3指令替换了，此时OllyDbg将INT3隐藏，显示出来的仍是中断前的指令。</p>
+<p>​	这个INT3指令，因其机器码是0xCC,也常被称为“CC指令”。当被调试进程执行INT3指令导致一个异常时，调试器就会捕捉这个异常，从而停在断点处，然后将断点处的指令恢复成原来的指令。当然，如果自己编写调试器，也可用其他指令代替INT3来触发异常。</p>
+<p>​	使用NT3断点的优点是可以设置无数个断点，缺点是改变了原程序机器码，容易被软件检测到。例如，为了防范API被下断，一些软件会检测API的首地址是否为0xCC(以此判断是否被下断)。用C语言来实现这个检测，方法是取得检测函数的地址，然后读取它的第1个字节，判断它是否等于“CC”。下面这段代码就是对MessageBoxA函数进行的断点检测。</p>
+<p><img src="https://raw.githubusercontent.com/FeowmAomr/picx-images-hosting/master/image-20240708112830413.webp" alt="image-20240708112830413"></p>
+<p>​	程序编译后，对MessageBoxA函数下断，程序将发现自己被设断跟踪了。躲过检测的方法是将断点设在函数内部或末尾，例如将断点设在函数入口的下一行。</p>
+</li>
+<li><p>硬件断点</p>
+<p>​	硬件断点和DRx调试寄存器有关。在Intel CPU体系架构手册中可以找到对DRx调试寄存器的介绍</p>
+<p><img src="https://raw.githubusercontent.com/FeowmAomr/picx-images-hosting/master/image-20240708113040210.webp" alt="image-20240708113040210"></p>
+<p>​	DRx调试寄存器共有8个(DR0<del>DR7),每个寄存器的特性如下：<br>● DR0</del>DR3:调试地址寄存器，用于保存需要监视的地址，例如设置硬件断点。<br>● DR4~DR5:保留，未公开具体作用。<br>● DR6:调试寄存器组状态寄存器。<br>● DR7:调试寄存器组控制寄存器。</p>
+<p>​	硬件断点的原理是使用DRO、DR1、DR2、DR3设定地址，并使用DR7设定状态，因此最多设置4个断点。硬件执行断点与CC断点的作用一样，但因为硬件执行断点不会将指令首字节修改为“CC”,所以更难检测。设断方法是在指定的代码行单击右键，执行快捷菜单中的“Breakpoint’”→“Hardware,,on execution’”（“断点”→“硬件执行”)命令（也可以在命令行中设置“HE地址”)。</p>
+</li>
+</ol>
+<p>​		为了便于理解，这里演示一下设置硬件断点的过程。加载实例TraceMe.exe,右键单击寄存器面板窗口，执行快捷菜单中的“View debug registers”（查看调试寄存器)	命令，接着在004013AAh处设置硬件断点。按“F9”键执行程序，程序就会中断在004013AAh处。查看调试寄存器，发现DR0的值为4013AAh,设置断点后，OllyDbg实际上	是将DR0~DR3中的一个设置为“004013AA”,然后在DR7中设置相应的控制位。这样，当被调试进程运行到004013AAh处时，CPU就会向OllyDbg发送异常信息，OllyDbg	对该信息进行初步处理后，中断程序，让用户继续操作。</p>
+<p><img src="https://raw.githubusercontent.com/FeowmAomr/picx-images-hosting/master/image-20240708114247540.webp" alt="image-20240708114247540"></p>
+<p>​		删除硬件断点稍有些麻烦。单击菜单项“Debug’”→“Hardware breakpoints’”(“调试”→“硬件断点”)，打开硬件断点面板，单击“Delete x”按钮删除相应的硬件断点。<br>​	OllyDbg提供了一个快捷键“F4”,可以执行到光标所在的行。这也是利用调试寄存器的原理,在中断后自动删除，相当于执行了一次性硬件断点。硬件断点的优点是速度	快，在INT3断点容易被发现的地方使用硬件断点会有很好的效果，缺点是最多只能使用4个断点。</p>
+<p><img src="https://raw.githubusercontent.com/FeowmAomr/picx-images-hosting/master/image-20240708114554149.webp" alt="image-20240708114554149"></p>
+<ol start="3">
+<li><p>内存断点</p>
+<p>​	OllyDbg可以设置内存访问断点或内存写入断点，原理是对所设的地址赋予不可访问不可写属性，这样当访问&#x2F;写入的时候就会产生异常。OllyDbg截获异常后，比较异常地址是不是断点地址，如果是就中断，让用户继续操作。</p>
+<p>​	因为每次出现异常时都要通过比较来确定是否应该中断，所以内存断点会降低OllyDbg的执行速度一也许OllyDbg是考虑到执行速度才规定只能下1个内存断点吧。</p>
+<p>​	程序运行时有3种状态，分别是读取、写入和执行。</p>
+<p><img src="https://raw.githubusercontent.com/FeowmAomr/picx-images-hosting/master/image-20240708115026150.webp" alt="image-20240708115026150"></p>
+<p>​	用OllyDbg重新加载实例TraceMe.exe,看到004013D0h处有一个写内存的指令，代码如下。</p>
+</li>
+</ol>
+<p>​									<img src="https://raw.githubusercontent.com/FeowmAomr/picx-images-hosting/master/image-20240708142638318.webp" alt="image-20240708142638318"></p>
+<p>​		下面用这个地址来演示如何下内存断点。在数据窗口中对00405528h处下内存写断点，将光标移到00405528h处，选中需要下断点的地址区域，单击右键，执行快捷菜单中的“Breakpoint’→“Memory,.on write”（“断点”→“内存写入”)命令</p>
+<p>​		下内存写断点后，按“F9”键让程序运行，程序会马上中断在“4013D0mov[405528,edx]”这行。如果要清除内存断点，可以单击右键，执行快捷菜单中的“Breakpoint’”→“Remove memorbreakpoint’”（“断点”→“删除内存断点”)命令。内存访问断点的操作与此类似。</p>
+<p>​		在这个场景中，硬件断点也可以实现与内存断点相同的效果。单个硬件写入访问断点可以设置为1字节、2字节或4字节，而且不论选择的数据范围有多大，只有前4个字节会起作用。打开数据窗口，选中需要下断点的地址区域，单击右键，执行快捷菜单中的“Breakpoint”→“Hardware,onwrite”→“Dword”(“断点”·“硬件写入”→“Dword’”)命令。</p>
+<p>​		重新加载TraceMe,会发现程序中断在触发硬件写人断点的下一条指令处，所以请记住：硬件访问&#x2F;写入断点是在触发硬件断点的下一条指令处下断，而内存断点是在触发断点的指令处下断。</p>
+<p><img src="https://raw.githubusercontent.com/FeowmAomr/picx-images-hosting/master/image-20240708143917773.webp" alt="image-20240708143917773"></p>
+<p>​		对代码也可下内存访问断点。在OllyDbg里重新加载实例TraceMe..exe,任意定位一行代码，例如004013D6h处，单击右键，执行快捷菜单中的“Breakpoint”一→“Memory,on access”（“断点”“内存访问”)命令</p>
+<p>​		当然，执行内存004013D6h处的代码时需要“访问”它，因此，按“F9”键让实例在OllyDbg里运行，就会中断在004013D6h处的内存访问断点上。这个实验表明，在内存执行的地方也可以通过内存访问来中断。内存断点不修改原始代码，不会像INT3断点那样因为修改代码被程序校验而导致下断失败。因此，在遇到代码校验且硬件断点失灵的情况下，可以使用内存断点。</p>
+<ol start="4">
+<li>内存访问一次性断点</li>
+</ol>
+<p>​		Windows对内存使用段页式的管理方式。在OllyDbg里按“Alt+M”快捷键显示内存，可以看到许多个段，每个段都有不可访问、读、写、执行属性。在相应的段上单击右键，会在快捷菜单中发现一个命令“Set break-on-access’”(在访问上设置断点，其快捷键是“F2”,用于对整个内存块设置该类断点。这个断点是一次性断点，当所在段被读取或执行时就会中断。中断发生以后，断点将被删除。如果想捕捉调用或返回某个模块，该类断点就显得特别有用了。右键快捷菜单中的“Set memory breakpoint on access”(设置内存访问断点)命令和“Set break-on-access”命令的功能大致相同，所不同的是前者不是一次性断点。这类断点仅在NT架构下可用。</p>
+<p><img src="https://raw.githubusercontent.com/FeowmAomr/picx-images-hosting/master/image-20240708145000914.webp" alt="image-20240708145000914"></p>
+<ol start="5">
+<li><p>消息断点</p>
+<p>​	Windows本身是由消息驱动的，如果调试时没有合适的断点，可以尝试使用消息断点。当某个特定窗口函数接收到某个特定消息时，消息断点将使程序中断。消息断点与INT3断点的区别在于：INT3断点可以在程序启动之前设置，消息断点只有在窗口被创建之后才能被设置并拦截消息。<br>​	当用户单击一个按钮、移动光标或者向文本框中输人文字时，一条消息就会发送给当前窗体。所有发送的消息都有4个参数，分别是1个窗口句柄(hwnd)、1个消息编号(msg)和2个32位长(long)的参数。Windows通过句柄来标识它所代表的对象。例如，在单击某个按钮时，Windows通过句柄来判断单击了哪一个按钮，然后发送相应的消息来通知程序。</p>
+<p>​	下面用实例TraceMe演示如何设置消息断点。在OllyDbg里运行实例，输入用户名和序列号，单击莱单项“View”→“Windows’”(“查看”→“窗口”)或工具栏中的W按钮，列出窗口相关参数。如果界面上没有内容，应执行右键快捷菜单中的“Actualize’”(刷新)命令。</p>
+<p><img src="https://raw.githubusercontent.com/FeowmAomr/picx-images-hosting/master/image-20240708151530825.webp" alt="image-20240708151530825"></p>
+<p>​	这里列出了所有属于被调试程序窗口及与窗口相关的重要参数，例如按钮、对应的ID及句柄(Handle)等。现在要对“Check”按钮下断点，即当单击该按钮时程序中断。在“Check”条目上单击右键，在弹出的快捷菜单中，执行“Message breakpoint on ClassProc”(在ClassProc上设置消息断点)命令，会弹出如图所示的设置窗口，下拉列表中显示了文本控件、按钮、鼠标等类型的消息。如果选择第1项“Any Message””,将拦截所有消息。我们在这里关注的消息属于“Button’”(按钮)这一项，当单击按钮并松开时，会发送“WM LBUTTONUP”这个消息。单击下拉菜单，选择“202 WM LBUTTONUP”选项，再单击“OK”按钮，消息断点就设置好了。单击选中“Break on any window”单选按钮，表示程序的任何窗口收到该消息后都会中断。“Log WinProc arguments”是用于记录消息过程函数的参数。</p>
+<p><img src="https://raw.githubusercontent.com/FeowmAomr/picx-images-hosting/master/image-20240708151936150.webp" alt="image-20240708151936150"></p>
+<p>​	回到TraceMe界面，单击“Check”按钮。松开鼠标时，程序将中断在Windows系统代码中，代码如下（不同版本的操作系统，代码会不同）。</p>
+<p><img src="https://raw.githubusercontent.com/FeowmAomr/picx-images-hosting/master/image-20240708152033708.webp" alt="image-20240708152033708"></p>
+<p>​	消息已经捕捉到了，但还处于系统底层代码中，不属于TraceMe主程序的代码，这时企图使用“Alt+f9”或“Crl+F9”快捷键返回TraceMe程序代码领空的操作是徒劳的。</p>
+</li>
+</ol>
+<p>​		主程序的代码在以00401000h开头的text区块里。从系统代码回到应用程序代码段的时候，正是.text区块代码执行的时候，因此，对，text区块下内存断点就能返回	应用程序的代码领空。按“Al+M”快捷键打开内存窗口，对text区块下内存访问断点，然后执行右键快捷菜单中的命令“Setbreak-on-access’”(在访问上设置断点)或按快捷	键“F2”</p>
+<p><img src="https://raw.githubusercontent.com/FeowmAomr/picx-images-hosting/master/image-20240708152647327.webp" alt="image-20240708152647327"></p>
+<p>​		按“F9”键运行程序，程序立即中断在004010D0h处，这里正是程序的消息循环处，代码如下。</p>
+<p>​							<img src="https://raw.githubusercontent.com/FeowmAomr/picx-images-hosting/master/image-20240708152855957.webp">	</p>
+<p>​		这段代码是一个消息循环，不停地处理TraceMe主界面的各类消息。此时可能不会直接处理按钮事件。如果是单步跟踪，会进入系统代码。在系统代码里，再次</p>
+<p>​	按“At+M”快捷键打开内存窗口，对.text区块下内存访问断点。按“f9”键运行，会再次来到代码中。重复这个过程，在一两次中断后就能到达处理按钮的事件代码处  	     	了。“Chek”按钮的事件代码如下。</p>
+<p><img src="https://raw.githubusercontent.com/FeowmAomr/picx-images-hosting/master/image-20240709103012918.webp" alt="image-20240709103012918"></p>
+<p>​		最后，可以将消息断点删除。按“Alt+B”快捷键切换到断点窗口，选中消息断点，直接将其删除。</p>
+<p><img src="https://raw.githubusercontent.com/FeowmAomr/picx-images-hosting/master/image-20240709104455427.webp" alt="image-20240709104455427"></p>
+<ol start="6">
+<li>条件断点</li>
+</ol>
+<p>​		在调试过程中，我们经常希望断点在满足一定条件时才会中断，这类断点称为条件断点。OllyDbg的条件断点可以按寄存器、存储器、消息等设断。条件断点是一个带有条件表达式的普通INT3断点。当调试器遇到这类断点时，断点将计算表达式的值，如果结果非零或者表达式有效，则断点生效（暂停被调试程序)。</p>
+<p>​		（1）按寄存器条件中断</p>
+<p>​		OD打开Conditional_bp.exe，在00401476h处按下设置条件斯点的快捷键“Shift+F2”,在条件文本框内输入条件表达式“eax&#x3D;&#x3D;0400000”。这样，程序在执行到00401476h处时，如果eax的值为0400000h,OllyDbg将会中断。如果安装了命令行插件，也可在命令行里直接输人如下命令。</p>
+<p><img src="https://raw.githubusercontent.com/FeowmAomr/picx-images-hosting/master/image-20240709105246966.webp" alt="image-20240709105246966"></p>
+<p>​													<img src="https://raw.githubusercontent.com/FeowmAomr/picx-images-hosting/master/image-20240709105049423.webp" alt="image-20240709105049423"></p>
+<p>​		（2）按存储器条件中断</p>
+<p>​		在这里用CreateFileA函数进行演示。在实际应用中程序可能会成百上千次调用CreateFileA函数，因此让OllyDbg在CreateFileA函数打开所需文件时中断就显得十分有必要了。CreateFile函数的代码原型如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">HANDLE <span class="title function_">CreateFileA</span><span class="params">(</span></span><br><span class="line"><span class="params">  [in]           LPCSTR                lpFileName,</span></span><br><span class="line"><span class="params">  [in]           DWORD                 dwDesiredAccess,</span></span><br><span class="line"><span class="params">  [in]           DWORD                 dwShareMode,</span></span><br><span class="line"><span class="params">  [in, optional] LPSECURITY_ATTRIBUTES lpSecurityAttributes,</span></span><br><span class="line"><span class="params">  [in]           DWORD                 dwCreationDisposition,</span></span><br><span class="line"><span class="params">  [in]           DWORD                 dwFlagsAndAttributes,</span></span><br><span class="line"><span class="params">  [in, optional] HANDLE                hTemplateFile</span></span><br><span class="line"><span class="params">)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>​		运行实例Conditional_bp,对CreateFileA函数设断。单击“OpenTest’”按钮，如图是当OllyDg中断时从栈中看到的情形，左侧标出了各参数相对于当前ESP的地址。打开这个功能的方法是：在栈窗口中单击右键，执行快捷菜单中的“Address’”→“Relative to ESP”(“地址”+“相对于ESP”)命令。</p>
+<p>​								<img src="https://raw.githubusercontent.com/FeowmAomr/picx-images-hosting/master/image-20240709111019091.webp" alt="image-20240709111019091"></p>
+<p>​		CreateFileA函数采用标准调用约定，参数按从右到左的顺序人栈。因为在函数刚执行时EBP栈结构还未建立，所以只能用ESP访问这些参数。CreateFileA函数的第1个参数“FileName”是文件名指针。在OllyDbg里，如果要得到第1个参数的内存地址，可以使用“[ESP+4]”;如果还要得到此地址指向的字符串，就必须使用“[ESP+4]”。</p>
+<p>​		该实例中调用了4次CreateFileA函数，假设要在该函数打开c:\1212.txt时下断，则”shitf+f2“，输入<code>[STRING [esp+4]]==&quot;c:\\1212.txt&quot;</code>(“STRING”前缀在OllyDbg中的解释是“以零结尾的ASCIl字符串”,如果是Unicode字符串，则改为UNICODE)</p>
+<p><img src="https://raw.githubusercontent.com/FeowmAomr/picx-images-hosting/master/image-20240709111858405.webp" alt="image-20240709111858405"></p>
+<ol start="7">
+<li><p>条件记录断点</p>
+<p>​	条件记录断点除了具有条件断点的作用，还能记录断点处函数表达式或参数的值。也可以设置通过断点的次数，每次符合暂停条件时，计数器的值都将减1。例如，要记录Conditional_bp实例调用CreateFileA函数的情况，可在CreateFileA函数的第1行按快捷键Shft+F4”,打开条件记录窗口.在“Condition”(条件)域中输入要设置的条件表达式。在“Explanation”(说明）域中设置一个名称。“Expression”(表达式)域中是要记录的内容的条件，只能设置1个表达式，例如要记录EAX的值，可以输“EAX”。“Decode value of expression as’”(解码表达式的值)下拉列表中可以对记录的数据进行分析。例如，在条件记录窗口中，如果“Expression”域中填写的是[esp+4],则要在该下拉列表中选择“Pointer to ASCIIString”(指向AsCIl字符串的指针)选项，才能得到正确的结果，其功能相当于“STRING”前缀.</p>
+<p>​	“Pause program”(暂停程序)域用于设置OllyDhg遇到断点时是否中断。“Log value of expression(记录表达式的值)域用于设置遇到断点时是否记录表达式的值。“Log function arguments’”(记录数参数)域用于设置遇到断点时是否记录函数的参数。对这3个域，可以根据需要设置“Never’”(不)、“On condition”(按条件)或“Always”(永远)。<br>​	条件记录断点允许向插件传递1个或多个命令。当应用程序因条件断点暂停，并且断点中包传递给插件的命令时，都会调用回调函数ODBG_Plugincmd(int reason,t_reg*registers,char*cmd)。如,当程序暂停时，传送命令“d esp”给CmdBar插件，只要在窗口的文本框中输”.d esp”，当条件断点断下时，就会执行“d esp”命令。这时，我们就可以在数据窗口中看到ESP地址处的数据了。</p>
+<p><img src="https://raw.githubusercontent.com/FeowmAomr/picx-images-hosting/master/image-20240709115926084.webp" alt="image-20240709115926084"></p>
+<p>​	设置好条件记录断点，单击实例Conditional_.bp的“OpenTest”按钮，运行后，OllyDbg会在“Logdata”窗口（快捷键“Alt+L”)记录数据。</p>
+</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/FeowmAomr/picx-images-hosting/master/image-20240709115945123-1720497892426-61.webp" alt="image-20240709115945123"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Aomr</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2024/07/25/OD%E4%B9%8B%E6%96%AD%E7%82%B9%E4%B8%80%E6%AD%A5%E5%88%B0%E8%83%83/">http://example.com/2024/07/25/OD之断点一步到胃/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://feowmaomr.github.io/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">Aomr'blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://FeowmAomr.github.io/picx-images-hosting/Aomr.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/07/25/32%E4%BD%8D%E4%B8%8B%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90%E8%A6%81%E7%82%B9%E4%B8%80%E6%AD%A5%E5%88%B0%E8%83%83/" title="32位下函数分析要点一步到&quot;胃&quot;"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">32位下函数分析要点一步到&quot;胃&quot;</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://FeowmAomr.github.io/picx-images-hosting/Aomr.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Aomr</div><div class="author-info__description">生活 一半烟火，一半清欢</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/FeowmAomr" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="tencent://AddContact/?fromId=45&amp;fromSubId=1&amp;subcmd=all&amp;uin=2446897858" target="_blank" title="QQ"><i class="fab fa-qq"></i></a><a class="social-icon" href="mailto:2446897858@qq.com" target="_blank" title="Email"><i class="fas fa-envelope-open-text"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/25/OD%E4%B9%8B%E6%96%AD%E7%82%B9%E4%B8%80%E6%AD%A5%E5%88%B0%E8%83%83/" title="OD之断点一步到胃">OD之断点一步到胃</a><time datetime="2024-07-25T10:21:54.000Z" title="发表于 2024-07-25 18:21:54">2024-07-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/25/32%E4%BD%8D%E4%B8%8B%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90%E8%A6%81%E7%82%B9%E4%B8%80%E6%AD%A5%E5%88%B0%E8%83%83/" title="32位下函数分析要点一步到&quot;胃&quot;">32位下函数分析要点一步到&quot;胃&quot;</a><time datetime="2024-07-25T10:00:54.000Z" title="发表于 2024-07-25 18:00:54">2024-07-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/25/%E5%B8%B8%E8%A7%81%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%88%86%E6%9E%90%E8%A6%81%E7%82%B9%E4%B8%80%E6%AD%A5%E5%88%B0%E8%83%83/" title="常见数据类型分析要点一步到&quot;胃&quot;">常见数据类型分析要点一步到&quot;胃&quot;</a><time datetime="2024-07-25T08:39:32.000Z" title="发表于 2024-07-25 16:39:32">2024-07-25</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Aomr</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-show-text.min.js" data-mobile="true" data-text="I,LOVE,YOU" data-fontsize="15px" data-random="true" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>
